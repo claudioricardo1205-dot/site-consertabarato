@@ -139,12 +139,6 @@
     <section id="about" class="section container about reveal">
       <h3>Quem Somos</h3>
       <p class="section-lead">A CONSERTA BARATO é uma loja especializada em assistência técnica e manutenção de celulares, atendendo diversos modelos e marcas. Nosso objetivo é oferecer soluções para nossos clientes com atendimento de qualidade, transparência, confiança e preços acessíveis.</p>
-      <div class="about-photos">
-        <div class="photo">Foto fachada</div>
-        <div class="photo">Foto interno</div>
-        <div class="photo">Foto equipe</div>
-        <div class="photo">Foto assistência</div>
-      </div>
     </section>
 
     <!-- Avaliações -->
@@ -193,9 +187,9 @@
           <h4>Endereço</h4>
           <p>Av. Carlos Botelho, 288 Centro, Nova Odessa - SP</p>
           <h4>Horário de Funcionamento</h4>
-          <p>Seg a Sex: [HORÁRIO]<br/>Sábado: [HORÁRIO]<br/>Domingo: [HORÁRIO]</p>
+          <p>Segunda a Sexta: 09:00 às 18:00<br>Sábado: 09:00 às 15:00<br>Domingo: Fechado</p>
           <h4>Instagram</h4>
-          <a class="btn btn-outline" href="#">@consertabarato</a>
+          <a class="btn btn-outline" href="https://www.instagram.com/consertabaratonovaodessa?stkn=dHR0a3JtN2I3Z2Nm" target="_blank" rel="noopener">@consertabarato</a>
         </div>
         <div>
           <h4>Solicitar Orçamento</h4>
@@ -217,48 +211,6 @@
   <!-- Botão flutuante WhatsApp -->
   <a id="floatWs" class="float-ws" href="https://api.whatsapp.com/send?phone=+5519997890663&text=Ol%C3%A1%0AGostaria%20de%20falar%20com%20a%20CONSERTA%20BARATO%20e%20solicitar%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener">WhatsApp</a>
 
-  <!-- Auth Modal -->
-  <div id="authModal" class="modal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true" style="max-width:480px;grid-template-columns:1fr;">
-      <button class="modal-close" id="authClose" aria-label="Fechar">✕</button>
-      <div style="padding:1rem">
-        <h3 id="authTitle">Entrar</h3>
-        <div id="authMessages" class="muted"></div>
-
-        <form id="loginFormPublic" style="display:block;margin-top:0.8rem">
-          <label>Email<input type="email" id="publicEmail" required></label>
-          <label>Senha<input type="password" id="publicPassword" required></label>
-          <div style="margin-top:0.25rem"><a href="#" id="showResetLink" class="muted">Esqueci minha senha</a></div>
-          <div style="margin-top:0.6rem;display:flex;gap:0.5rem">
-            <button id="publicLoginBtn" class="btn">Entrar</button>
-            <button id="showRegister" type="button" class="btn btn-outline">Criar conta</button>
-          </div>
-        </form>
-
-        <form id="resetFormPublic" style="display:none;margin-top:0.8rem">
-          <label>Seu email para recuperação<input type="email" id="resetEmail" required></label>
-          <div style="margin-top:0.6rem;display:flex;gap:0.5rem">
-            <button id="publicResetBtn" class="btn">Enviar instruções</button>
-            <button id="showLoginFromReset" type="button" class="btn btn-outline">Voltar</button>
-          </div>
-        </form>
-
-        <form id="registerFormPublic" style="display:none;margin-top:0.8rem">
-          <label>Nome completo<input type="text" id="publicName" required></label>
-          <label>CPF<input type="text" id="publicCPF" placeholder="000.000.000-00"></label>
-          <label>WhatsApp<input type="text" id="publicPhone" placeholder="(99) 9 9999-9999"></label>
-          <label>Endereço<input type="text" id="publicAddress" placeholder="Rua, nº, Bairro, Cidade"></label>
-          <label>Email<input type="email" id="publicRemail" required></label>
-          <label>Senha<input type="password" id="publicRpassword" required></label>
-          <div style="margin-top:0.6rem;display:flex;gap:0.5rem">
-            <button id="publicRegisterBtn" class="btn">Registrar</button>
-            <button id="showLogin" type="button" class="btn btn-outline">Voltar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <footer class="site-footer">
       <div class="container footer-inner">
       <div>
@@ -267,7 +219,7 @@
       </div>
       <div>
         <p>WhatsApp: (19) 99789-0663</p>
-        <p>Instagram: @consertabarato</p>
+        <p>Instagram: <a href="https://www.instagram.com/consertabaratonovaodessa?stkn=dHR0a3JtN2I3Z2Nm" target="_blank" rel="noopener">@consertabarato</a></p>
         <p>Endereço: Av. Carlos Botelho, 288 Centro, Nova Odessa - SP</p>
       </div>
       <div>
@@ -277,44 +229,5 @@
   </footer>
 
   <script src="js/app.js"></script>
-  <script>
-    // Fallback: garantir que o botão 'Entrar' abra o modal mesmo se o módulo de auth falhar
-    (function(){
-      document.addEventListener('DOMContentLoaded', function(){
-        const btn = document.getElementById('loginBtn');
-        const modal = document.getElementById('authModal');
-        const close = document.getElementById('authClose');
-        if(!btn || !modal) return;
-        btn.addEventListener('click', function(e){
-          e.preventDefault();
-          modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
-        });
-        if(close) close.addEventListener('click', function(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); });
-        modal.addEventListener('click', function(e){ if(e.target===modal){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); } });
-      });
-    })();
-  </script>
-  <script type="module" src="js/auth.js"></script>
-  <script>
-    // Fallback: if the auth module didn't load, prevent form submit and show a helpful message
-    (function(){
-      window.addEventListener('load', function(){
-        setTimeout(function(){
-          if(!window.__authModuleLoaded){
-            console.warn('Auth module did not load. Blocking public login submit to avoid page reload. Check DevTools console for errors.');
-            var loginForm = document.getElementById('loginFormPublic');
-            if(loginForm){
-              loginForm.addEventListener('submit', function(e){
-                e.preventDefault();
-                var msg = document.getElementById('authMessages');
-                if(msg) msg.textContent = 'Erro: módulo de autenticação não carregou. Abra DevTools e verifique o console.';
-                alert('Erro: módulo de autenticação não carregou. Abra DevTools (F12) e verifique o console para detalhes.');
-              });
-            }
-          }
-        }, 250);
-      });
-    })();
-  </script>
 </body>
 </html>
