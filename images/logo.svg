@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo CONSERTA BARATO">
+  <title>CONSERTA BARATO</title>
+  <rect width="128" height="128" rx="24" fill="none"/>
+  <circle cx="64" cy="64" r="58" fill="#d62828" />
+  <!-- ícone de smartphone estilizado -->
+  <g transform="translate(38,30) scale(0.8)" fill="#fff">
+    <rect x="6" y="2" width="36" height="64" rx="6"/>
+    <rect x="14" y="6" width="20" height="48" rx="4" fill="#d62828"/>
+    <circle cx="24" cy="58" r="2.8"/>
+  </g>
+</svg>

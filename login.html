@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login — CONSERTA BARATO</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#fff}
+    .login-card{width:100%;max-width:420px;padding:2rem;border-radius:12px;border:1px solid #eee;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,0.06)}
+    .login-card h2{margin:0 0 1rem;color:var(--dark)}
+    .login-card label{display:block;margin-bottom:0.6rem}
+    .login-card input{width:100%;padding:0.6rem;border-radius:8px;border:1px solid #e6e6e6}
+    .form-actions{display:flex;gap:0.6rem;align-items:center;margin-top:0.8rem}
+    .muted{color:var(--muted)}
+    .show-pass{cursor:pointer;color:var(--accent);font-weight:700}
+    .brand{display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem}
+    .brand img{width:48px;height:48px}
+  </style>
+</head>
+<body>
+  <main class="login-page">
+    <div class="login-card">
+      <div class="brand">
+        <img src="images/logo_clean_opt.png" alt="logo">
+        <div>
+          <div style="font-weight:800">CONSERTA <span style="color:var(--accent)">BARATO</span></div>
+          <div class="muted">Área Administrativa</div>
+        </div>
+      </div>
+      <h2>Entrar</h2>
+      <div id="loginMessages" class="muted"></div>
+      <form id="loginForm" style="margin-top:0.6rem">
+        <label>Email<input type="email" id="loginEmail" required></label>
+        <label>Senha
+          <div style="display:flex;gap:0.5rem;align-items:center;position:relative">
+            <input type="password" id="loginPassword" required style="flex:1;padding-right:3.2rem">
+            <button id="togglePass" type="button" class="btn btn-outline" aria-pressed="false" title="Mostrar senha" style="position:absolute;right:0.2rem;top:0.25rem;height:2rem;line-height:1.6rem;padding:0 0.6rem">👁️</button>
+          </div>
+        </label>
+        <div class="form-actions">
+          <button class="btn btn-ws" id="doLogin">ENTRAR</button>
+          <a href="index.html" class="btn btn-outline">Voltar ao site</a>
+        </div>
+      </form>
+      <div style="margin-top:1rem">
+        <a href="#" id="forgotLink" class="muted">Esqueci minha senha</a>
+        <div id="recoverArea" style="display:none;margin-top:0.6rem">
+          <label>Informe seu e-mail para recuperação
+            <div style="display:flex;gap:0.5rem;align-items:center">
+              <input type="email" id="recoverEmail" placeholder="seu@exemplo.com" style="flex:1">
+              <button id="sendRecover" type="button" class="btn btn-ws">Enviar</button>
+              <button id="cancelRecover" type="button" class="btn btn-outline">Cancelar</button>
+            </div>
+          </label>
+          <div id="recoverMessage" class="muted" style="margin-top:0.5rem"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import firebaseConfig from './firebase-config.js';
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, getIdTokenResult } from 'https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js';
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const loginForm = document.getElementById('loginForm');
+    const loginMessages = document.getElementById('loginMessages');
+    const togglePass = document.getElementById('togglePass');
+    const loginPassword = document.getElementById('loginPassword');
+    const forgotLink = document.getElementById('forgotLink');
+    const recoverArea = document.getElementById('recoverArea');
+    const recoverEmail = document.getElementById('recoverEmail');
+    const sendRecover = document.getElementById('sendRecover');
+    const cancelRecover = document.getElementById('cancelRecover');
+    const recoverMessage = document.getElementById('recoverMessage');
+
+    // Toggle show/hide password
+    if(togglePass){
+      togglePass.addEventListener('click', (ev)=>{
+        ev.preventDefault();
+        // ensure no overlay blocks the button
+        if(getComputedStyle(togglePass).pointerEvents === 'none') return;
+        const isPwd = loginPassword.type === 'password';
+        loginPassword.type = isPwd ? 'text' : 'password';
+        togglePass.setAttribute('aria-pressed', String(isPwd));
+        togglePass.title = isPwd ? 'Ocultar senha' : 'Mostrar senha';
+        togglePass.textContent = isPwd ? '🙈' : '👁️';
+      });
+    }
+
+    loginForm && loginForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      console.log('login.html submit');
+      loginMessages.textContent = '';
+      const email = document.getElementById('loginEmail').value;
+      const password = loginPassword.value;
+      try{
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+        // check claims
+        const token = await getIdTokenResult(cred.user);
+        if(token && token.claims && token.claims.admin){
+          window.location.href = 'admin/index.html';
+        } else {
+          loginMessages.textContent = 'Acesso negado: esta conta não possui permissão de administrador.';
+        }
+      }catch(err){
+        console.error('login error', err);
+        loginMessages.textContent = 'Erro: ' + (err.code || '') + ' ' + err.message;
+      }
+    });
+
+    // Show inline recovery area
+    forgotLink && forgotLink.addEventListener('click', (e)=>{
+      e.preventDefault();
+      recoverMessage.textContent = '';
+      recoverArea.style.display = recoverArea.style.display === 'none' ? 'block' : 'none';
+      if(recoverArea.style.display === 'block') recoverEmail.focus();
+    });
+
+    // Cancel recovery
+    cancelRecover && cancelRecover.addEventListener('click', (e)=>{
+      e.preventDefault();
+      recoverArea.style.display = 'none';
+      recoverMessage.textContent = '';
+    });
+
+    // Email format validator
+    function isValidEmail(v){
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+
+    // Send recovery email with validation and friendly messages
+    sendRecover && sendRecover.addEventListener('click', async (e)=>{
+      e.preventDefault();
+      const email = (recoverEmail.value || '').trim();
+      recoverMessage.textContent = '';
+      if(!email){ recoverMessage.textContent = 'Por favor informe o e-mail.'; recoverEmail.focus(); return; }
+      if(!isValidEmail(email)){ recoverMessage.textContent = 'Formato de e-mail inválido.'; recoverEmail.focus(); return; }
+      try{
+        await sendPasswordResetEmail(auth, email);
+        recoverMessage.textContent = 'Instruções de recuperação enviadas para: ' + email;
+      }catch(err){
+        console.error('sendPasswordResetEmail error', err);
+        // map common errors
+        let msg = 'Erro ao enviar e-mail.';
+        if(err.code === 'auth/user-not-found') msg = 'Usuário não encontrado para este e-mail.';
+        else if(err.code === 'auth/invalid-email') msg = 'E-mail inválido.';
+        else if(err.code) msg = err.message || msg;
+        recoverMessage.textContent = msg;
+      }
+    });
+  </script>
+</body>
+</html>

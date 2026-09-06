@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin — CONSERTA BARATO</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .admin-wrap{display:flex;min-height:100vh}
+    .admin-sidebar{width:260px;border-right:1px solid #eee;padding:1rem;background:#fff}
+    .admin-main{flex:1;padding:1.2rem}
+    .sidebar-menu{display:flex;flex-direction:column;gap:0.4rem}
+    .sidebar-menu a{padding:0.6rem;border-radius:8px;text-decoration:none;color:var(--dark)}
+    .sidebar-menu a.active{background:var(--accent);color:#fff}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+    .small{font-size:0.85rem;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <aside class="admin-sidebar">
+      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem">
+        <img src="../images/logo_clean_opt.png" width="44" height="44" alt="logo">
+        <div><strong>CONSERTA <span style="color:var(--accent)">BARATO</span></strong><div class="small">Painel Administrativo</div></div>
+      </div>
+      <nav class="sidebar-menu">
+        <a href="index.html" class="active">📊 Dashboard</a>
+        <a href="produtos.html">📱 Produtos</a>
+        <a href="servicos.html">🔧 Serviços</a>
+        <a href="#" id="confLink">⚙️ Configurações</a>
+        <a href="#" id="logoutBtn">🚪 Sair</a>
+      </nav>
+    </aside>
+    <main class="admin-main">
+      <h2>Dashboard</h2>
+      <div id="stats" class="cards" style="margin-top:1rem"></div>
+      <h3 style="margin-top:1.6rem">Últimos produtos cadastrados</h3>
+      <div id="latest" style="margin-top:0.8rem"></div>
+    </main>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

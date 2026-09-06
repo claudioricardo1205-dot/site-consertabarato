@@ -1,0 +1,19 @@
+/* Admin specific styles */
+.admin-sidebar{background:#fff}
+.admin-main{background:#fff}
+.modal .modal-content{max-width:760px}
+.modal.open{display:flex}
+:root{--accent:#d62828;--bg:#fff;--muted:#666}
+*{box-sizing:border-box}
+body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;margin:0;background:var(--bg);color:#111}
+.admin{max-width:980px;margin:2rem auto;padding:1rem}
+.card{background:#fff;border:1px solid #eee;padding:1rem;border-radius:10px;margin-bottom:1rem}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.btn{background:var(--accent);color:#fff;padding:0.5rem 0.8rem;border-radius:8px;border:none}
+.form-inline{display:flex;gap:0.5rem;flex-wrap:wrap}
+.form-inline input{padding:0.5rem;border:1px solid #e6e6e6;border-radius:6px}
+#productsList .item,#quotesList .item,#ordersList .item{border:1px solid #f0f0f0;padding:0.6rem;border-radius:8px;margin-bottom:0.5rem;display:flex;justify-content:space-between;align-items:center}
+.muted{color:var(--muted);font-size:0.9rem}
+.navbtn{background:transparent;border:1px solid #eee;padding:0.4rem 0.6rem;border-radius:8px;margin-right:0.4rem}
+.navbtn.active{background:var(--accent);color:#fff}
+.danger{background:#e03131}

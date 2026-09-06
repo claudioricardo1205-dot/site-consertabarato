@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helpers
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    function hasKeys(data, arr) {
+      return data.keys().hasAll(arr);
+    }
+
+    function validProduct(data) {
+      return hasKeys(data, ['name','price','public','createdAt'])
+        && data.name is string
+        && data.name.size() > 2
+        && data.price is number
+        && data.price >= 0
+        && data.public is bool
+        && data.createdAt is timestamp
+        && (
+          !( 'photoMain' in data ) || (data.photoMain is string && data.photoMain.size() > 0)
+        );
+    }
+
+    function validService(data) {
+      return hasKeys(data, ['name','price','public','createdAt'])
+        && data.name is string
+        && data.name.size() > 2
+        && data.price is number
+        && data.price >= 0
+        && data.public is bool
+        && data.createdAt is timestamp
+        && (
+          !( 'photoMain' in data ) || (data.photoMain is string && data.photoMain.size() > 0)
+        );
+    }
+
+    // Produtos
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && validProduct(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Serviços
+    match /services/{serviceId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && validService(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Padrão: leitura pública, escrita negada
+    match /{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

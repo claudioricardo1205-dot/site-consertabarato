@@ -1,0 +1,62 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Coleção de produtos - leitura pública, escrita apenas por admin
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Coleção de serviços - leitura pública, escrita apenas por admin
+    match /services/{serviceId} {
+      allow read: if true;
+      allow create, update, delete: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Regra padrão: apenas leitura pública em outros documentos
+    match /{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Produtos: leitura pública, escrita só para admins
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Serviços: leitura pública, escrita só para admins
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Clientes: o próprio usuário pode ler/escrever seu documento
+    match /customers/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Orçamentos: criação por usuários autenticados; leitura/edição pelo autor ou admin
+    match /quotes/{quoteId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if request.auth != null && (resource.data.uid == request.auth.uid || request.auth.token.admin == true);
+    }
+
+    // Pedidos: criação por usuários autenticados; leitura/edição pelo autor ou admin
+    match /orders/{orderId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if request.auth != null && (resource.data.uid == request.auth.uid || request.auth.token.admin == true);
+    }
+
+    // Regras padrão: negar tudo por segurança
+    match /{document=**} {
+      allow read: if false;
+      allow write: if false;
+    }
+  }
+}

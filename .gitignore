@@ -1,0 +1,13 @@
+/.venv
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
+dist/
+coverage/
+*.log
+images/backup/
+/firebase-service-account.json
+tools/*.pyc
+scripts/set_admin_claim.js
+scripts/check_claims.js

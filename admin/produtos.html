@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Produtos — Admin</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+    .product-row{display:flex;gap:1rem;padding:0.8rem;border:1px solid #eee;border-radius:8px;margin-bottom:0.6rem;align-items:center}
+    .product-row img{width:96px;height:64px;object-fit:cover;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <aside class="admin-sidebar">
+      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem">
+        <img src="../images/logo_clean_opt.png" width="44" height="44" alt="logo">
+        <div><strong>CONSERTA <span style="color:var(--accent)">BARATO</span></strong><div class="small">Painel Administrativo</div></div>
+      </div>
+      <nav class="sidebar-menu">
+        <a href="index.html">📊 Dashboard</a>
+        <a href="produtos.html" class="active">📱 Produtos</a>
+        <a href="servicos.html">🔧 Serviços</a>
+        <a href="#" id="confLink2">⚙️ Configurações</a>
+        <a href="#" id="logoutBtn2">🚪 Sair</a>
+      </nav>
+    </aside>
+    <main class="admin-main">
+      <div class="topbar">
+        <h2>Produtos</h2>
+        <div><button id="addProductBtn" class="btn btn-ws">+ ADICIONAR PRODUTO</button></div>
+      </div>
+      <div id="productsList"></div>
+
+      <!-- Modal / Form -->
+      <div id="productModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+          <button class="modal-close" id="closeModal">✕</button>
+          <div style="padding:1rem;">
+            <h3 id="modalTitle">Novo produto</h3>
+            <form id="productForm">
+              <label>Nome<input id="p_name" required></label>
+              <label>Marca<input id="p_brand"></label>
+              <label>Modelo<input id="p_model"></label>
+              <label>Armazenamento<input id="p_storage"></label>
+              <label>RAM<input id="p_ram"></label>
+              <label>Cor<input id="p_color"></label>
+              <label>Categoria<select id="p_category"><option value="novo">Novo</option><option value="seminovo">Seminovo</option></select></label>
+              <label>Preço<input id="p_price"></label>
+              <label>Preço promocional<input id="p_price_promo"></label>
+              <label>Status<select id="p_status"><option value="available">Disponível</option><option value="vendido">Vendido</option><option value="indisponivel">Indisponível</option></select></label>
+              <label>Descrição<textarea id="p_description"></textarea></label>
+              <label>URL da imagem principal<input id="p_photo_url" placeholder="https://..."></label>
+              <div style="margin-top:0.6rem"><button class="btn btn-ws" id="saveProductBtn">Salvar</button><button type="button" class="btn btn-outline" id="cancelProductBtn">Cancelar</button></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

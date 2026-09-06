@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Permite leitura pública de objetos (GET, LIST) em todo o bucket
+    match /{allPaths=**} {
+      allow read: if true;
+      // Permite escrita para usuários autenticados temporariamente.
+      // OBS: isto é menos restritivo que a política ideal (admin-only).
+      // Recomenda-se voltar para admin-only após confirmar uploads e aplicar CORS.
+      allow write: if request.auth != null;
+    }
+  }
+}
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Produtos images: leitura pública; upload/alteração apenas por admins
+    match /products/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true
+        && request.resource != null
+        && request.resource.size < 5 * 1024 * 1024 // <5MB
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    // Serviços images: leitura pública; upload apenas por admins
+    match /services/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true
+        && request.resource != null
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    // Bloquear outras operações por padrão
+    match /{allPaths=**} {
+      allow read: if false;
+      allow write: if false;
+    }
+  }
+}

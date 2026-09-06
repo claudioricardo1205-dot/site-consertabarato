@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Serviços — Admin</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .service-row{display:flex;gap:1rem;padding:0.8rem;border:1px solid #eee;border-radius:8px;margin-bottom:0.6rem;align-items:center}
+    .service-row img{width:64px;height:64px;object-fit:cover;border-radius:6px}
+  </style>
+</head>
+<body>
+  <div class="admin-wrap">
+    <aside class="admin-sidebar">
+      <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem">
+        <img src="../images/logo_clean_opt.png" width="44" height="44" alt="logo">
+        <div><strong>CONSERTA <span style="color:var(--accent)">BARATO</span></strong><div class="small">Painel Administrativo</div></div>
+      </div>
+      <nav class="sidebar-menu">
+        <a href="index.html">📊 Dashboard</a>
+        <a href="produtos.html">📱 Produtos</a>
+        <a href="servicos.html" class="active">🔧 Serviços</a>
+        <a href="#" id="confLink3">⚙️ Configurações</a>
+        <a href="#" id="logoutBtn3">🚪 Sair</a>
+      </nav>
+    </aside>
+    <main class="admin-main">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+        <h2>Serviços</h2>
+        <div><button id="addServiceBtn" class="btn btn-ws">+ ADICIONAR SERVIÇO</button></div>
+      </div>
+      <div id="servicesList"></div>
+
+      <div id="serviceModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+          <button class="modal-close" id="closeServiceModal">✕</button>
+          <div style="padding:1rem;">
+            <h3 id="serviceModalTitle">Novo serviço</h3>
+             <form id="serviceForm">
+               <label>Nome<input id="s_name" required></label>
+               <label>Descrição<textarea id="s_description"></textarea></label>
+               <label>URL da imagem<input id="s_image_url" placeholder="https://..."></label>
+               <label>Status<select id="s_status"><option value="ativo">Ativo</option><option value="inativo">Inativo</option></select></label>
+               <div style="margin-top:0.6rem"><button class="btn btn-ws" id="saveServiceBtn">Salvar</button><button type="button" class="btn btn-outline" id="cancelServiceBtn">Cancelar</button></div>
+             </form>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
