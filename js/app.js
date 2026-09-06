@@ -164,10 +164,10 @@ function handleHeader(){
 window.addEventListener('scroll', handleHeader);
 handleHeader();
 
-// Hero parallax on mouse move
+// Hero parallax only on non-touch devices
 const heroEl = document.querySelector('.hero');
 const heroImg = document.querySelector('.hero-visual img');
-if(heroEl && heroImg){
+if(heroEl && heroImg && !('ontouchstart' in window)){
   heroEl.addEventListener('mousemove', (ev)=>{
     const r = heroEl.getBoundingClientRect();
     const x = (ev.clientX - r.left) / r.width - 0.5;
