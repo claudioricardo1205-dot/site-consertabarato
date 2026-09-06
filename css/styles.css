@@ -113,19 +113,18 @@ body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica
   .sales-banner-text h2{font-size:1.15rem}
 }
 
-@media(max-width:600px){
-  .logo-text{font-size:0.95rem}
-  .main-nav a{font-size:0.95rem}
+@media(max-width:768px){
+  .hero{flex-direction:column;text-align:center;padding:2rem 0}
+  .hero-visual{order:-1;margin-bottom:1rem}
+  .hero-visual img{max-width:200px;width:100%;height:auto;margin:0 auto}
   .hero-content h1{font-size:1.6rem}
   .hero-content h2{font-size:1.05rem}
   .section h3{font-size:1.25rem}
-  .cards .card{padding:1rem}
-  .btn{padding:0.55rem 0.8rem;font-size:0.95rem;border-radius:10px}
-  .large{padding:0.75rem 1rem;border-radius:12px}
-  .grid{grid-template-columns:1fr}
-  .products-grid{grid-template-columns:1fr}
-  .brand-list{gap:0.5rem}
-  .brand-list span{padding:0.35rem 0.6rem;font-size:0.9rem}
+  .cards{grid-template-columns:1fr !important}
+  .cards .card{width:100%;max-width:100%}
+  .grid{grid-template-columns:1fr !important}
+  .products-grid{grid-template-columns:1fr !important}
+  .brand-list{flex-direction:column;align-items:center}
   .testimonials{flex-direction:column}
   .testimonial-form{padding:1rem}
   .quote-form input,.quote-form textarea,.testimonial-form input,.testimonial-form select,.testimonial-form textarea{font-size:16px}
