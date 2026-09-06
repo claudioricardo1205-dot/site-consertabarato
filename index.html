@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>CONSERTA BARATO — Assistência Técnica de Celulares</title>
-    <meta name="description" content="CONSERTA BARATO - Assistência técnica especializada e manutenção de celulares. Peças de qualidade, atendimento rápido e preço justo." />
+  <title>CONSERTA BARATO — Assistência Técnica de Celulares</title>
+  <meta name="description" content="CONSERTA BARATO - Assistência técnica especializada e manutenção de celulares. Peças de qualidade, atendimento rápido e preço justo." />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -26,13 +26,15 @@
       </nav>
       <div class="header-ctas">
         <a class="btn btn-ws" id="whatsappTop" href="https://api.whatsapp.com/send?phone=+5519997890663&text=Ol%C3%A1%0AGostaria%20de%20falar%20com%20a%20CONSERTA%20BARATO%20e%20solicitar%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener">FALAR NO WHATSAPP</a>
+        <button class="btn btn-outline" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">Menu</button>
+        <button class="btn btn-outline" id="loginBtn">Entrar</button>
       </div>
     </div>
   </header>
 
   <main>
     <!-- Banner Destaque Vendas -->
-    <section id="vendas" class="section container sales-banner">
+    <section id="vendas" class="section container sales-banner reveal">
       <div class="sales-banner-content">
         <div class="sales-banner-text">
           <h2>Compra e Venda de Celulares</h2>
@@ -43,7 +45,7 @@
     </section>
 
     <!-- Banner Principal -->
-    <section id="home" class="hero container">
+    <section id="home" class="hero container reveal">
       <div class="hero-content">
         <h1>CONSERTA BARATO</h1>
         <h2>Seu celular com problema? A CONSERTA BARATO resolve!</h2>
@@ -58,10 +60,10 @@
     </section>
 
     <!-- Serviços -->
-    <section id="assistencia" class="section container">
+    <section id="assistencia" class="section container reveal">
       <h3>Assistência Técnica Especializada</h3>
       <p class="section-lead">Na CONSERTA BARATO realizamos diversos tipos de manutenção e reparos em celulares de diferentes marcas e modelos.</p>
-      <div class="cards grid">
+      <div class="cards grid reveal">
         <article class="card">
           <h4>Troca de Tela</h4>
           <p>Troca e reparo de telas quebradas, trincadas ou com problemas de funcionamento.</p>
@@ -106,7 +108,7 @@
     </section>
 
     <!-- Marcas -->
-    <section id="marcas" class="section container brands">
+    <section id="marcas" class="section container brands reveal">
       <h3>Trabalhamos com Diversas Marcas</h3>
       <p>Trabalhamos com manutenção para diversos modelos e marcas de celulares. Caso não encontre sua marca, entre em contato conosco.</p>
       <div class="brand-list">
@@ -123,7 +125,7 @@
     </section>
 
     <!-- Porque escolher -->
-    <section id="why" class="section container why">
+    <section id="why" class="section container why reveal">
       <h3>Por que escolher a CONSERTA BARATO?</h3>
         <div class="grid">
         <div class="why-item"><h4>Atendimento Especializado</h4><p>Profissionais preparados para ajudar você.</p></div>
@@ -135,7 +137,7 @@
     </section>
 
     <!-- Sobre -->
-    <section id="about" class="section container about">
+    <section id="about" class="section container about reveal">
       <h3>Quem Somos</h3>
       <p class="section-lead">A CONSERTA BARATO é uma loja especializada em assistência técnica e manutenção de celulares, atendendo diversos modelos e marcas. Nosso objetivo é oferecer soluções para nossos clientes com atendimento de qualidade, transparência, confiança e preços acessíveis.</p>
       <div class="about-photos">
@@ -147,9 +149,9 @@
     </section>
 
     <!-- Avaliações -->
-    <section id="testimonials" class="section container">
+    <section id="testimonials" class="section container reveal">
       <h3>Clientes Satisfeitos</h3>
-      <div class="testimonials">
+      <div class="testimonials reveal">
         <div class="testimonial">
           <p>"Excelente atendimento e serviço rápido!"</p>
           <strong>— João</strong>
@@ -163,7 +165,7 @@
           <strong>— Carlos</strong>
         </div>
       </div>
-      <div class="testimonial-form">
+      <div class="testimonial-form reveal">
         <h4>Deixe sua avaliação</h4>
         <form id="reviewForm">
           <label>Nome<input type="text" name="name" required></label>
@@ -183,7 +185,7 @@
     </section>
 
     <!-- Contato -->
-    <section id="contact" class="section container contact">
+    <section id="contact" class="section container contact reveal">
       <h3>Fale com a CONSERTA BARATO</h3>
       <div class="contact-grid">
         <div>

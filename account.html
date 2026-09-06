@@ -2,28 +2,58 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Minha Conta — CONSERTA BARATO</title>
   <link rel="stylesheet" href="css/styles.css" />
-  <script type="module" src="js/account.js"></script>
+  <style>
+    .page-header{background:rgba(255,255,255,0.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.06);position:sticky;top:0;z-index:1000;transition:background .35s ease, box-shadow .35s ease}
+    .page-header.shrink{box-shadow:0 10px 30px rgba(0,0,0,0.08);background:rgba(255,255,255,0.92)}
+    .header-inner{max-width:1100px;margin:0 auto;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-weight:800;color:var(--dark);text-decoration:none;font-size:1.25rem;display:flex;align-items:center;gap:0.6rem}
+    .logo-img{width:48px;height:48px;border-radius:50%;object-fit:cover;background:var(--accent);display:block}
+    .logo-text{font-weight:800;color:var(--dark);font-size:1.05rem}
+    .logo-text span{color:var(--accent)}
+    .container{max-width:1100px;margin:0 auto;padding:2rem}
+    .card{background:var(--card);padding:1.2rem;border-radius:14px;border:1px solid #eee;margin-bottom:1rem;transition:all .35s ease}
+    .card:hover{box-shadow:0 14px 32px rgba(16,24,40,0.08);transform:translateY(-4px)}
+    .muted{color:var(--muted)}
+  </style>
 </head>
 <body>
-  <header class="site-header"><div class="container header-inner"><a class="logo" href="index.html">CONSERTA BARATO</a></div></header>
+  <header class="page-header" id="pageHeader">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <img class="logo-img" src="images/logo_clean_opt.png" alt="CONSERTA BARATO logo" width="48" height="48">
+        <span class="logo-text">CONSERTA <span>BARATO</span></span>
+      </a>
+    </div>
+  </header>
+
   <main class="container">
-    <section class="card">
+    <section class="card reveal">
       <h2>Minha Conta</h2>
       <div id="profileArea" class="muted">Carregando...</div>
     </section>
 
-    <section class="card">
+    <section class="card reveal">
       <h3>Meus Orçamentos</h3>
       <div id="myQuotes">Carregando...</div>
     </section>
 
-    <section class="card">
+    <section class="card reveal">
       <h3>Minhas Compras</h3>
       <div id="myOrders">Carregando...</div>
     </section>
   </main>
+
+  <script type="module" src="js/account.js"></script>
+  <script>
+    const pageHeader = document.getElementById('pageHeader');
+    function handleHeader(){
+      if(window.scrollY > 40) pageHeader.classList.add('shrink'); else pageHeader.classList.remove('shrink');
+    }
+    window.addEventListener('scroll', handleHeader);
+    handleHeader();
+  </script>
 </body>
 </html>

@@ -7,20 +7,22 @@
   <link rel="stylesheet" href="css/styles.css" />
   <style>
     .login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#fff}
-    .login-card{width:100%;max-width:420px;padding:2rem;border-radius:12px;border:1px solid #eee;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,0.06)}
+    .login-card{width:100%;max-width:420px;padding:2rem;border-radius:16px;border:1px solid #eee;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,0.06);transition:all .35s ease}
+    .login-card:hover{box-shadow:0 20px 45px rgba(16,24,40,0.1);transform:translateY(-4px)}
     .login-card h2{margin:0 0 1rem;color:var(--dark)}
     .login-card label{display:block;margin-bottom:0.6rem}
-    .login-card input{width:100%;padding:0.6rem;border-radius:8px;border:1px solid #e6e6e6}
-    .form-actions{display:flex;gap:0.6rem;align-items:center;margin-top:0.8rem}
+    .login-card input{width:100%;padding:0.6rem;border-radius:8px;border:1px solid #e6e6e6;transition:border-color .3s ease, box-shadow .3s ease}
+    .login-card input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(214,40,40,0.1)}
+    .form-actions{display:flex;gap:0.6rem;align-items:center;margin-top:0.8rem;flex-wrap:wrap}
     .muted{color:var(--muted)}
     .show-pass{cursor:pointer;color:var(--accent);font-weight:700}
     .brand{display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem}
-    .brand img{width:48px;height:48px}
+    .brand img{width:48px;height:48px;border-radius:50%;object-fit:cover}
   </style>
 </head>
 <body>
   <main class="login-page">
-    <div class="login-card">
+    <div class="login-card reveal">
       <div class="brand">
         <img src="images/logo_clean_opt.png" alt="logo">
         <div>
@@ -78,11 +80,9 @@
     const cancelRecover = document.getElementById('cancelRecover');
     const recoverMessage = document.getElementById('recoverMessage');
 
-    // Toggle show/hide password
     if(togglePass){
       togglePass.addEventListener('click', (ev)=>{
         ev.preventDefault();
-        // ensure no overlay blocks the button
         if(getComputedStyle(togglePass).pointerEvents === 'none') return;
         const isPwd = loginPassword.type === 'password';
         loginPassword.type = isPwd ? 'text' : 'password';
@@ -100,7 +100,6 @@
       const password = loginPassword.value;
       try{
         const cred = await signInWithEmailAndPassword(auth, email, password);
-        // check claims
         const token = await getIdTokenResult(cred.user);
         if(token && token.claims && token.claims.admin){
           window.location.href = 'admin/index.html';
@@ -113,7 +112,6 @@
       }
     });
 
-    // Show inline recovery area
     forgotLink && forgotLink.addEventListener('click', (e)=>{
       e.preventDefault();
       recoverMessage.textContent = '';
@@ -121,19 +119,16 @@
       if(recoverArea.style.display === 'block') recoverEmail.focus();
     });
 
-    // Cancel recovery
     cancelRecover && cancelRecover.addEventListener('click', (e)=>{
       e.preventDefault();
       recoverArea.style.display = 'none';
       recoverMessage.textContent = '';
     });
 
-    // Email format validator
     function isValidEmail(v){
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
     }
 
-    // Send recovery email with validation and friendly messages
     sendRecover && sendRecover.addEventListener('click', async (e)=>{
       e.preventDefault();
       const email = (recoverEmail.value || '').trim();
@@ -145,7 +140,6 @@
         recoverMessage.textContent = 'Instruções de recuperação enviadas para: ' + email;
       }catch(err){
         console.error('sendPasswordResetEmail error', err);
-        // map common errors
         let msg = 'Erro ao enviar e-mail.';
         if(err.code === 'auth/user-not-found') msg = 'Usuário não encontrado para este e-mail.';
         else if(err.code === 'auth/invalid-email') msg = 'E-mail inválido.';

@@ -1,11 +1,10 @@
-const WHATSAPP_NUMBER = "+5519997890663"; // número atualizado para CONSERTA BARATO (formato +55...) 
+const WHATSAPP_NUMBER = "+5519997890663";
 
 function wsLink(message){
   const text = encodeURIComponent(message);
   return `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${text}`;
 }
 
-// Open WhatsApp from hero/headers
 function init(){
   const heroWs = document.getElementById('heroWs');
   const whatsappTop = document.getElementById('whatsappTop');
@@ -16,7 +15,6 @@ function init(){
 
   const openWs = (msg)=>{ window.open(wsLink(msg),'_blank','noopener'); };
 
-  // attach click handlers with preventDefault to avoid accidental navigation
   heroWs && heroWs.addEventListener('click', (e)=>{ e.preventDefault(); openWs('Olá\nGostaria de mais informações sobre serviços'); });
   whatsappTop && whatsappTop.addEventListener('click', (e)=>{ e.preventDefault(); openWs('Olá\nTenho interesse'); });
   contactWs && contactWs.addEventListener('click', (e)=>{ e.preventDefault(); openWs('Olá\nGostaria de falar com a CONSERTA BARATO'); });
@@ -39,61 +37,57 @@ function init(){
     openWs(msg);
   });
 
-  // Menu toggle for mobile (accessible)
   const menuToggle = document.getElementById('menuToggle');
   const mainNav = document.getElementById('mainNav');
   if(menuToggle && mainNav){
     menuToggle.setAttribute('aria-expanded', 'false');
+    const isMobile = () => window.matchMedia('(max-width:900px)').matches;
+    let overlay = null;
+    if(isMobile()){
+      overlay = document.createElement('div');
+      overlay.className = 'main-nav-overlay';
+      document.body.appendChild(overlay);
+    }
+
+    const openMenu = ()=>{
+      mainNav.classList.add('open');
+      if(overlay) overlay.classList.add('open');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeMenu = ()=>{
+      mainNav.classList.remove('open');
+      if(overlay) overlay.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+
     menuToggle.addEventListener('click', (e)=>{
-      const open = mainNav.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       e.stopPropagation();
+      const isOpen = mainNav.classList.contains('open');
+      isOpen ? closeMenu() : openMenu();
     });
 
-    // Close menu when a nav link is clicked (mobile)
     mainNav.querySelectorAll('a').forEach(a=>{
       a.addEventListener('click', ()=>{
-        if(mainNav.classList.contains('open')){
-          mainNav.classList.remove('open');
-          menuToggle.setAttribute('aria-expanded','false');
-        }
+        if(mainNav.classList.contains('open')) closeMenu();
       });
     });
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (ev)=>{
-      if(mainNav.classList.contains('open')){
-        const inside = mainNav.contains(ev.target) || menuToggle.contains(ev.target);
-        if(!inside){
-          mainNav.classList.remove('open');
-          menuToggle.setAttribute('aria-expanded','false');
-        }
-      }
+    if(overlay){
+      overlay.addEventListener('click', closeMenu);
+    }
+
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && mainNav.classList.contains('open')) closeMenu();
     });
   }
-
-  // Vendas de celulares removidas: não carregar produtos
 
   // Filters
   document.querySelectorAll('.filter').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      const f = btn.dataset.filter;
-      const applyFilter = (items)=>{
-        const filtered = items.filter(p=>{
-          if(f==='all') return true;
-          if(f==='novo') return p.condition==='novo';
-          if(f==='seminovo') return p.condition==='seminovo';
-          return p.brand===f;
-        });
-        renderProducts(filtered);
-      };
-      if(productsCache && productsCache.length){
-        applyFilter(productsCache);
-      } else {
-        fetch('data/products.json').then(r=>r.json()).then(data=> applyFilter(data.products)).catch(err=> console.warn('Erro no filtro:',err));
-      }
     });
   });
 }
@@ -103,6 +97,12 @@ if(document.readyState === 'loading'){
 } else {
   init();
 }
+
+setTimeout(()=>{
+  document.querySelectorAll('.reveal').forEach(el=>{
+    if(!el.classList.contains('show')) el.classList.add('show');
+  });
+}, 1500);
 
 function renderProducts(items){
   // Função removida: vendas de celulares desativadas
@@ -122,8 +122,6 @@ function expressInterest(name){
   const msg = `Olá! Tenho interesse no celular ${name}. Gostaria de mais informações.`;
   window.open(wsLink(msg),'_blank');
 }
-
-/* --- Modern effects: smooth scroll, reveal on scroll, header shrink, parallax, ripple, testimonials carousel --- */
 
 // Smooth scrolling for internal links
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -147,9 +145,16 @@ const io = new IntersectionObserver((entries, obs)=>{
 },{threshold:0.12});
 
 // Add reveal class to common elements
-['.section', '.card', '.product', '.why-item', '.testimonial', '.hero-content', '.hero-visual'].forEach(sel=>{
+['.section', '.card', '.product', '.why-item', '.testimonial', '.hero-content', '.hero-visual', '.sales-banner', '.brand-list', '.testimonial-form'].forEach(sel=>{
   document.querySelectorAll(sel).forEach(el=> io.observe(el));
 });
+
+// Fallback: ensure reveal elements become visible if IntersectionObserver fails
+setTimeout(()=>{
+  document.querySelectorAll('.reveal').forEach(el=>{
+    if(!el.classList.contains('show')) el.classList.add('show');
+  });
+}, 1500);
 
 // Header shrink on scroll
 const headerEl = document.querySelector('.site-header');
@@ -198,4 +203,3 @@ if(testimonials.length > 0){
     testimonials[ti].classList.add('active');
   }, 5000);
 }
-
