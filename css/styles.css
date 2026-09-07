@@ -139,11 +139,11 @@ body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica
 }
 
 /* Scroll reveal animation */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;will-change:opacity,transform}
+.reveal{opacity:1;transform:none;transition:opacity .7s ease, transform .7s ease;will-change:opacity,transform}
 .reveal.show{opacity:1;transform:none}
 
 /* fade-up animation utility */
-.fade-up{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s ease;will-change:opacity,transform}
+.fade-up{opacity:1;transform:none;transition:opacity .7s ease, transform .7s ease;will-change:opacity,transform}
 .fade-up.show{opacity:1;transform:none}
 
 .site-header{transition:padding .22s ease, box-shadow .22s ease, background .22s ease}
